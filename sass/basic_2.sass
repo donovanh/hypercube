@@ -1,0 +1,154 @@
+@import compass/reset
+@import compass/css3
+@import mixins
+
+$animationDuration: 10s
+
+/* Fallback for older browsers */
+.stage
+  display: none
+.csstransforms3d .stage
+  display: block
+
+.fallback
+  display: block
+  padding: 130px 0 0
+  iframe
+    display: block
+    margin: 0 auto
+  p 
+    text-align: center
+    letter-spacing: 1
+    line-height: 1.5em
+    padding: 20px
+.csstransforms3d .fallback
+  display: none
+
+body
+  background-color: #333
+
+.stage
+  width: 300px
+  height: 400px
+  margin: 100px auto
+  position: relative
+  +perspective(1600px)
+  +perspective-origin(50% -240px)
+
+  .positioning
+    +transform-style(preserve-3d)
+    +transform(rotateY(-30deg))
+    +animation(rotate $animationDuration infinite linear)
+
+
+  .cube, .joins
+    +transform-style(preserve-3d)
+
+    figure
+      display: block
+      width: 296px
+      height: 296px
+      border: 2px solid #eee
+      position: absolute
+
+    &.outer
+      .front
+        +transform(translateZ(150px))
+      .back
+        +transform(translateZ(-150px))
+      .left
+        +transform(rotateY(-90deg) translateZ(-150px))
+      .right
+        +transform(rotateY(-90deg) translateZ(150px))
+      .top
+        +transform(rotateX(-90deg) translateZ(-150px))
+        -webkit-box-reflect: none
+      .bottom
+        +transform(rotateX(-90deg) translateZ(150px))
+        -webkit-box-reflect: none
+
+    &.inner
+      +transform(translate3d(100px, 100px, 0))
+
+      figure
+        width: 96px
+        height: 96px
+        background: rgba(210,210,210,0.9)
+        -webkit-box-reflect: none
+
+      .front
+        +transform(translateZ(50px))
+      .back
+        +transform(translateZ(-50px))
+      .left
+        +transform(rotateY(-90deg) translateZ(-50px))
+      .right
+        +transform(rotateY(-90deg) translateZ(50px))
+      .top
+        +transform(rotateX(-90deg) translateZ(-50px))
+      .bottom
+        +transform(rotateX(-90deg) translateZ(50px))
+
+  .joins
+    figure
+      width: 100px
+      background: none
+      border-top: 142px solid
+      border-left: 100px solid transparent
+      border-right: 100px solid transparent
+      border-bottom: none
+      +transform-origin(50% 0 0)
+      -webkit-box-reflect: none
+
+    .one
+      border-top-color: rgba(255,255,255,1)
+      +transform(translateZ(150px) rotateX(-45deg))
+    .two
+      border-top-color: rgba(180,180,180,1)
+      +transform(translateZ(-150px) rotateX(45deg))
+    .three
+      border-top-color: rgba(200,200,200,1)
+      +transform(rotateY(-90deg) translateZ(-150px) rotateX(45deg))
+    .four
+      border-top-color: rgba(200,200,200,1)
+      +transform(rotateY(-90deg) translateZ(150px) rotateX(-45deg))
+
+    .five, .six, .seven, .eight
+      +transform-origin(50% 142px 0)
+      border-top: none
+      border-bottom: 142px solid
+    .five
+      border-bottom-color: rgba(140,140,140,1)
+      +transform(translateZ(60px) translateY(-50px) rotateX(-45deg))
+    .six
+      border-bottom-color: rgba(180,180,180,1)
+      +transform(translateZ(-60px) translateY(-50px) rotateX(45deg))
+    .seven
+      border-bottom-color: rgba(180,180,180,1)
+      +transform(rotateY(-90deg) translateZ(-60px) translateY(-50px) rotateX(45deg))
+    .eight
+      border-bottom-color: rgba(200,200,200,1)
+      +transform(rotateY(-90deg) translateZ(60px) translateY(-50px) rotateX(-45deg))
+
+    .nine
+      border-top-color: rgba(200,200,200,1)
+      +transform(rotateZ(-90deg) translate3d(-150px, -150px, 150px) rotateX(-45deg))
+    .ten
+      border-top-color: rgba(200,200,200,1)
+      +transform(rotateZ(-90deg) translate3d(-150px, 150px, 150px) rotateX(-133deg))
+    .eleven
+      display: none
+    .twelve
+      display: none
+
+@include keyframes(rotate)
+  0%
+    @include transform(rotateY(0))
+  100%
+    @include transform(rotateY(-360deg))
+
+
+
+
+
+
